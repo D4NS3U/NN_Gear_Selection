@@ -1,4 +1,4 @@
-%Script for concatenating multiple .mat-files and buil training data for NN
+%Script for concatenating multiple .mat-files and build training data for NN
 %development
 clear;
 clc;
@@ -17,12 +17,12 @@ for i = 1:length(fileList)
     nEng = D.V(:,D.Col.ColNMOT);    %engine revolutions
     gEar = D.V(:,D.Col.ColGANG);    %active gear
 
-    loadedData = [ t vCar ap nEng gEar ];
+    loadedData = [ vCar ap nEng gEar ];
     dataSet = loadedData;
     %filtering dataSet for invalid gears (neutral and reverse)
     indValid = find( (gEar > 0) & (gEar < 10));
     dataSetValid = dataSet(indValid,:);
-    gearShift = [0; diff(dataSetValid(:,5))];
+    gearShift = [0; diff(dataSetValid(:,4))];
     timeStep = 10000;
     modulo = mod(length(dataSetValid), timeStep);
     modLoaded = (length(dataSetValid)-modulo)/timeStep;
@@ -47,4 +47,7 @@ for i = 1:length(fileList)
 end
 save('OUTPUT/xTrain.mat','xTrain');
 save('OUTPUT/yTrain.mat','yTrain');
+
+writecell(xTrain,'OUTPUT/xTrain.dat');
+writecell(yTrain,'OUTPUT/yTrain.dat');
 
