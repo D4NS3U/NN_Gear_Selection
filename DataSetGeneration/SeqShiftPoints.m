@@ -27,8 +27,8 @@ for i = 1:length(fileList)
            a = a + 1;
        end
     end
-    xTrainLoaded = cell(1, a);
-    yTrainLoaded = cell(1, a);
+    xTrainLoaded = cell(a,1);
+    yTrainLoaded = cell(a,1);
     b=1;
     for k = 1:length(gearShift)
         if gearShift(k, :) ~= 0
@@ -45,8 +45,8 @@ for i = 1:length(fileList)
        xTrainSeq = xTrainLoaded;
        yTrainSeq = yTrainLoaded;
     else
-        xTrainSeq = [xTrainSeq, xTrainLoaded];
-        yTrainSeq = [yTrainSeq, xTrainLoaded];
+        xTrainSeq = [xTrainSeq; xTrainLoaded];
+        yTrainSeq = [yTrainSeq; xTrainLoaded];
     end
 end
 save('OUTPUT/xTrainSeq.mat','xTrainSeq');
